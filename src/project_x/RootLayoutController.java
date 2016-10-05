@@ -16,7 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,8 +47,6 @@ import javafx.util.Duration;
 
 public class RootLayoutController implements Initializable {
     
-    @FXML
-    private AnchorPane changing_menu_piosnki_pane;
     private double savedMili = 0;
     @FXML
     private ChangeListener listener;
@@ -92,25 +89,27 @@ public class RootLayoutController implements Initializable {
         
     }
     
-   @FXML
-   private void handleChangingScreenPiosnki(ActionEvent event)
-   {
-       changing_menu_piosnki_pane.getChildren().setAll(FXMLLoader.load(""));   //getChildren().setAll(FXMLLoader.load("vista2.fxml"));
-      
-   }
+    @FXML
+    private void handleSongTimeSliderMouseReleased(){
+        if (volume_slider.getValue() > 0.0){
+            volume = mediaPlayer.getVolume();
+        }
+        
+    }
     
     @FXML
-    private void handleSongTimeSliderDrag()
-    {
+    private void handleSongTimeSliderDrag(){
       // mediaPlayer.currentTimeProperty().removeListener(listener);
        //listener = null;
-       // savedMili = System.currentTimeMillis();
+        //savedMili = System.currentTimeMillis();
          //actualTimeSliderRemoveListener();
         
         if(mediaPlayer != null){
           mediaPlayer.seek(Duration.seconds(mediaPlayer.getMedia().getDuration().toSeconds() * song_time_slider_invisible.getValue() * 0.01)); 
+         // mediaPlayer.seek(Duration.seconds(mediaPlayer.getMedia().getDuration().toSeconds() * song_time_slider_visible.getValue() * 0.01)); 
+         // mediaPlayer.play();
         }
-       // savedMili = System.currentTimeMillis();
+        //savedMili = System.currentTimeMillis();
         //actualTimeSliderAddListener();
           //actual_song_time_slider.
     }
@@ -166,12 +165,15 @@ public class RootLayoutController implements Initializable {
         if(mediaPlayer != null){
           mediaPlayer.setVolume(volume_slider.getValue() / 100.0);
         }
-        if (volume_slider.getValue() > 0.0 && mute_button.isSelected() == true){
-             mute_button.setSelected(false);
+        if (volume_slider.getValue() > 0.0){
+           // volume = mediaPlayer.getVolume();
+            if (mute_button.isSelected() == true){
+                 mute_button.setSelected(false);
+            }
         }
-        if (volume_slider.getValue() == 0.0 && mute_button.isSelected() == false){
-             mute_button.setSelected(true);
-        }
+            if (volume_slider.getValue() == 0.0 && mute_button.isSelected() == false){
+                 mute_button.setSelected(true);
+            }
     }
     
     @FXML
@@ -337,13 +339,13 @@ public class RootLayoutController implements Initializable {
 
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-               // if (System.currentTimeMillis() > savedMili + 100 )
+               // if (System.currentTimeMillis() > savedMili + 50 )
                // if (mediaPlayer.currentTimeProperty().getValue().toMillis() > (savedMili + 100))
                //if (semaphore == 1)
                 // {
                       song_time_slider_visible.setValue((mediaPlayer.currentTimeProperty().getValue().toSeconds() / mediaPlayer.getMedia().getDuration().toSeconds())* 100.0);
                      // savedMili = mediaPlayer.currentTimeProperty().getValue().toMillis();
-                // }
+               //  }
                
             }
         });
@@ -376,12 +378,12 @@ public class RootLayoutController implements Initializable {
         
         //openSave();
        
-         allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
-        allSongData.add(new Song("to drugie", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
+         allSongData.add(new Song("Braid - downstream", "F:\\Rzeczy karolka\\muzykama\\braid ost\\Braid OST - 02 - Downstream.mp3"));
+        allSongData.add(new Song("Lindsey - electric", "F:\\Rzeczy karolka\\muzykama\\Lindsey Stirling\\9. Lindsey Stirling - Electric Daisy Violin.mp3"));
         
-        // allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
-         //allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
-         //allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
+         allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
+         allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
+         allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
         //currentSongData = allSongData ;
         current_playlist_table.setItems(currentSongData);
        current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());

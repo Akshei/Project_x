@@ -49,7 +49,7 @@
                           <tabs>
                             <Tab text="Piosnki">
                               <content>
-                                <AnchorPane fx:id="changing_menu_piosnki_pane" minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="319.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="319.0" />
                               </content>
                             </Tab>
                             <Tab text="Playlisty szyskie">
@@ -92,14 +92,14 @@
             <Slider fx:id="song_time_slider_visible" layoutX="14.0" layoutY="14.0" onMouseClicked="#handleSongTimeSliderDrag" onMouseDragged="#handleSongTimeSliderDrag" prefHeight="14.0" prefWidth="777.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
             <Label fx:id="actual_song_time" layoutX="13.0" layoutY="29.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0" />
             <Label fx:id="max_song_time" layoutX="736.0" layoutY="30.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="30.0" />
-            <Slider fx:id="volume_slider" layoutX="618.0" layoutY="40.0" onMouseClicked="#handleSongVolumeSliderDrag" onMouseDragged="#handleSongVolumeSliderDrag" prefHeight="14.0" prefWidth="62.0" />
+            <Slider fx:id="volume_slider" layoutX="618.0" layoutY="40.0" onMouseClicked="#handleSongVolumeSliderDrag" onMouseDragged="#handleSongVolumeSliderDrag" onMouseReleased="#handleSongTimeSliderMouseReleased" prefHeight="14.0" prefWidth="62.0" />
             <ToggleButton fx:id="play_pause_button" layoutX="355.0" layoutY="35.0" mnemonicParsing="false" onAction="#handlePlayPauseButton" text="pla/ause" />
             <ToggleButton fx:id="randomize_button" layoutX="43.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Randomize All the songs!" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="680.0" />
             <ToggleButton fx:id="loop_song_button" layoutX="118.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="loop_song_button" />
             <Button layoutX="285.0" layoutY="35.0" mnemonicParsing="false" onAction="#handlePreviousSongButton" text="prev song" />
             <Button layoutX="459.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleNextSongButton" text="next song" />
             <ToggleButton fx:id="mute_button" layoutX="589.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleMuteButton" prefHeight="25.0" prefWidth="27.0" text="ToggleButton" />
-            <Slider fx:id="song_time_slider_invisible" layoutX="123.0" layoutY="15.0" onMouseClicked="#handleSongTimeSliderDrag" onMouseDragged="#handleSongTimeSliderDrag" opacity="0.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+            <Slider fx:id="song_time_slider_invisible" layoutX="15.0" layoutY="15.0" onMouseClicked="#handleSongTimeSliderDrag" onMouseDragged="#handleSongTimeSliderDrag" opacity="0.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
          </children></AnchorPane>
   </items>
 </SplitPane>
