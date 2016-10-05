@@ -6,7 +6,10 @@
 package project_x;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -82,13 +85,7 @@ public class RootLayoutController implements Initializable {
     private double volume = 1.0;
     //int semaphore = 1;
     
-    @FXML
-    private void initalize(){
-        System.out.println("Initialized!");
-        //current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().songProperty());
-        
-    }
-    
+ 
     @FXML
     private void handleSongTimeSliderMouseReleased(){
         if (volume_slider.getValue() > 0.0){
@@ -105,6 +102,7 @@ public class RootLayoutController implements Initializable {
          //actualTimeSliderRemoveListener();
         
         if(mediaPlayer != null){
+            // mediaPlayer.pause();
           mediaPlayer.seek(Duration.seconds(mediaPlayer.getMedia().getDuration().toSeconds() * song_time_slider_invisible.getValue() * 0.01)); 
          // mediaPlayer.seek(Duration.seconds(mediaPlayer.getMedia().getDuration().toSeconds() * song_time_slider_visible.getValue() * 0.01)); 
          // mediaPlayer.play();
@@ -373,17 +371,52 @@ public class RootLayoutController implements Initializable {
         
     }
     
+     private List<File> getNewTextFiles(File dir) {
+         List<File> song_list = new ArrayList<File>();
+         //File dir = new File("E:\\muzyka\\" /*EricTaylorRoyaltyFreeMusic02"*/);
+         File[] file_list = dir.listFiles();
+         for (File x : file_list)
+         {
+             if (x.isDirectory())
+             {
+                 for (File y : getNewTextFiles(x))
+                 {
+                     song_list.add(y);
+                 }
+             }
+             else if (x.getName().toLowerCase().endsWith(".mp3"))
+             {
+                 song_list.add(x);
+             }
+         }
+    /*return dir.listFiles(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.toLowerCase().endsWith(".mp3");
+        }
+    });*/
+    return song_list;
+     }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         //openSave();
        
-         allSongData.add(new Song("Braid - downstream", "F:\\Rzeczy karolka\\muzykama\\braid ost\\Braid OST - 02 - Downstream.mp3"));
-        allSongData.add(new Song("Lindsey - electric", "F:\\Rzeczy karolka\\muzykama\\Lindsey Stirling\\9. Lindsey Stirling - Electric Daisy Violin.mp3"));
+        // allSongData.add(new Song("Braid - downstream", "F:\\Rzeczy karolka\\muzykama\\braid ost\\Braid OST - 02 - Downstream.mp3"));
+       // allSongData.add(new Song("Lindsey - electric", "F:\\Rzeczy karolka\\muzykama\\Lindsey Stirling\\9. Lindsey Stirling - Electric Daisy Violin.mp3"));
+         //allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
+        // allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
+        // allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
         
-         allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
-         allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
-         allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
+         allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
+        allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
+        
+       for (File x: getNewTextFiles(new File("E:")))
+       {
+            allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
+       }
+
         //currentSongData = allSongData ;
         current_playlist_table.setItems(currentSongData);
        current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());
