@@ -19,7 +19,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -370,7 +373,6 @@ public class RootLayoutController implements Initializable {
         {
             czas = Integer.toString(min) +":0" + Integer.toString(seconds);
         }
-       
         actual_song_time.setText(czas);
     }
     
@@ -382,14 +384,14 @@ public class RootLayoutController implements Initializable {
     
     @FXML
     private void addMusicFiles(ActionEvent event){
-         System.out.println("add music files!");
-          FileChooser chooser = new FileChooser();
-            chooser.setTitle("Open File");
-            File file = chooser.showOpenDialog(new Stage());
-            
-            if (file != null){
-                allSongData.add(new Song(file.getName(),file.getAbsolutePath()));
-            }
+        System.out.println("add music files!");
+         FileChooser chooser = new FileChooser();
+           chooser.setTitle("Open File");
+           File file = chooser.showOpenDialog(new Stage());
+
+           if (file != null){
+               allSongData.add(new Song(file.getName(),file.getAbsolutePath()));
+           }
     }
     private void openSave()
     {
@@ -423,6 +425,19 @@ public class RootLayoutController implements Initializable {
     return song_list;
      }
     
+     @FXML
+     private void openWindowForSongLocalizations() throws Exception
+     {
+            FXMLLoader loader = new FXMLLoader();
+            Parent root =  loader.load(getClass().getResource("RootLayout.fxml"));
+
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show(); 
+     }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -437,7 +452,7 @@ public class RootLayoutController implements Initializable {
        //  allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
        // allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
         
-       for (File x: getNewTextFiles(new File("F:\\Rzeczy karolka\\muzykama")))
+       for (File x: getNewTextFiles(new File("F:\\Rzeczy karolka"/*\\muzykama"*/)))
        {
             allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
        }
