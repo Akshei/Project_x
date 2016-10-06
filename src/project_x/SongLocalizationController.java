@@ -6,23 +6,31 @@ package project_x;
  * and open the template in the editor.
  */
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Maciek
- */
 public class SongLocalizationController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    @FXML
+    private void handleDodajLokalizacje(ActionEvent event){
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("JavaFX Projects");
+        File defaultDirectory = new File("c:");
+        chooser.setInitialDirectory(defaultDirectory);
+        Stage stage = new Stage();
+        File selectedDirectory = chooser.showDialog(stage);
+    }
+        
     
 }
