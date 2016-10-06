@@ -11,7 +11,7 @@
       <ButtonBar layoutX="81.0" layoutY="346.0" prefHeight="40.0" prefWidth="254.0">
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleDodajLokalizacje" text="Dodaj" />
-            <Button mnemonicParsing="false" text="Usuń" />
+            <Button mnemonicParsing="false" onAction="#handleUsunLokalizacje" text="Usuń" />
             <Button mnemonicParsing="false" onAction="#handleAcceptButton" text="Akceptuj" />
         </buttons>
       </ButtonBar>

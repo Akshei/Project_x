@@ -45,8 +45,19 @@ public class SongLocalizationController implements Initializable {
         directoryList.add(selectedDirectory);
          //System.out.println(b);
          directoryListView.setItems(directoryList);
-         System.out.println("Czy directory lsit jest pustre w song local?");
-      System.out.println(directoryList.isEmpty());
+    }
+    
+    @FXML
+    private void handleUsunLokalizacje(ActionEvent event)
+    {
+        if (directoryList.isEmpty() == false)
+        {
+             int i = directoryListView.getSelectionModel().getSelectedIndex();
+            if ( i < 0) { i = 0 ;}
+            directoryList.remove(i);
+       
+        }
+       
     }
     
     @FXML
