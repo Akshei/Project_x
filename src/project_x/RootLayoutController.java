@@ -54,6 +54,7 @@ import javafx.util.Duration;
 
 public class RootLayoutController implements Initializable {
     
+    private ObservableList<File> directoryList = FXCollections.observableArrayList();
     private double savedMili = 0;
     @FXML
     private ChangeListener listener;
@@ -88,6 +89,7 @@ public class RootLayoutController implements Initializable {
     int selectedIndex;
     private double volume = 1.0;
     //int semaphore = 1;
+    boolean b = false;
     
  
     @FXML
@@ -452,7 +454,9 @@ public class RootLayoutController implements Initializable {
         dialogStage.setScene(scene);
 
         // Set the person into the controller.
-        //SongLocalizationController controller = loader.getController();
+        SongLocalizationController controller = loader.getController();
+        controller.setRootLayoutController(this);
+        controller.setWindowStage(dialogStage);
        // controller.setDialogStage(dialogStage);
         //controller.setPerson(person);
 
@@ -484,11 +488,16 @@ public class RootLayoutController implements Initializable {
       // {
       //      allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
       // }
-       
-       for (File x: getNewTextFiles(new File("E:\\muzyka")))
-       {
+      System.out.println(b);
+       for(File y: directoryList){
+           System.out.println(y.getAbsolutePath());
+           System.out.println("Kromka");
+           for (File x: getNewTextFiles(new File(y.getAbsolutePath())))
+            {
             allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
+            }
        }
+       
 
        openWindowForSongLocalizations();
         //currentSongData = allSongData ;
@@ -498,15 +507,24 @@ public class RootLayoutController implements Initializable {
         
     }    
     
-    int getSelectedIndex()
+    private int getSelectedIndex()
     {
         return selectedIndex;
     }
     
-    void setSelectedIndex(int selectedIndex_)
+    private void setSelectedIndex(int selectedIndex_)
     {
         if (selectedIndex_ < 0) { selectedIndex_ = currentSongData.size() - 1; }
         selectedIndex = selectedIndex_ % currentSongData.size();
     }
     
+    public void setDirectoriesList(ObservableList<File> directoryList_)
+    {
+        directoryList = directoryList_;
+    }
+    
+    public void setTrue()
+    {
+        b = true;
+    }
 }

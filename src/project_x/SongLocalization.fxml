@@ -12,10 +12,10 @@
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleDodajLokalizacje" text="Dodaj" />
             <Button mnemonicParsing="false" text="Usuń" />
-            <Button mnemonicParsing="false" text="Anuluj" />
+            <Button mnemonicParsing="false" onAction="#handleAcceptButton" text="Akceptuj" />
         </buttons>
       </ButtonBar>
-      <ListView layoutX="14.0" layoutY="14.0" prefHeight="294.0" prefWidth="330.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0" />
+      <ListView fx:id="directoryListView" layoutX="14.0" layoutY="14.0" prefHeight="294.0" prefWidth="330.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0" />
       <Label layoutX="15.0" layoutY="14.0" prefHeight="13.0" prefWidth="344.0" text="Podaj foldery których piosenki mają być dodane do odtwarzacza" />
    </children>
 </AnchorPane>
