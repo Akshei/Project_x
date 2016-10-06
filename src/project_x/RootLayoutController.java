@@ -457,6 +457,7 @@ public class RootLayoutController implements Initializable {
         SongLocalizationController controller = loader.getController();
         controller.setRootLayoutController(this);
         controller.setWindowStage(dialogStage);
+        controller.setDirectoryList(directoryList);
        // controller.setDialogStage(dialogStage);
         //controller.setPerson(person);
 
@@ -488,10 +489,12 @@ public class RootLayoutController implements Initializable {
       // {
       //      allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
       // }
-      System.out.println(b);
+       openWindowForSongLocalizations();
+      //System.out.println("Czy directory lsit jest pustre w root layout?");
+      //System.out.println(directoryList.isEmpty());
        for(File y: directoryList){
-           System.out.println(y.getAbsolutePath());
-           System.out.println("Kromka");
+           //System.out.println(y.getAbsolutePath());
+           //System.out.println("Kromka");
            for (File x: getNewTextFiles(new File(y.getAbsolutePath())))
             {
             allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
@@ -499,7 +502,7 @@ public class RootLayoutController implements Initializable {
        }
        
 
-       openWindowForSongLocalizations();
+      
         //currentSongData = allSongData ;
         current_playlist_table.setItems(currentSongData);
        current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());
@@ -510,6 +513,11 @@ public class RootLayoutController implements Initializable {
     private int getSelectedIndex()
     {
         return selectedIndex;
+    }
+    
+    public ObservableList<File> getDirectoryList()
+    {
+        return directoryList;
     }
     
     private void setSelectedIndex(int selectedIndex_)

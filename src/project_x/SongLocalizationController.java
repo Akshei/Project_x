@@ -23,14 +23,15 @@ import javafx.stage.Stage;
 public class SongLocalizationController implements Initializable {
     
     RootLayoutController rootController;
-    private ObservableList<File> directoryList = FXCollections.observableArrayList();
+    private ObservableList<File> directoryList;
     @FXML
     ListView directoryListView;
     Stage window_stage;
+    boolean b = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      directoryListView.setItems(directoryList);
+      //directoryList = rootController.getDirectoryList();
     }    
     
     @FXML
@@ -42,7 +43,10 @@ public class SongLocalizationController implements Initializable {
         Stage stage = new Stage();
         File selectedDirectory = chooser.showDialog(stage);
         directoryList.add(selectedDirectory);
-         
+         //System.out.println(b);
+         directoryListView.setItems(directoryList);
+         System.out.println("Czy directory lsit jest pustre w song local?");
+      System.out.println(directoryList.isEmpty());
     }
     
     @FXML
@@ -63,4 +67,10 @@ public class SongLocalizationController implements Initializable {
     {
         rootController = controller;
     }
+    
+    public void setDirectoryList(ObservableList<File> list)
+    {
+       directoryList = list;
+    }
+    
 }
