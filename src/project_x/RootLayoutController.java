@@ -7,6 +7,7 @@ package project_x;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -426,16 +427,43 @@ public class RootLayoutController implements Initializable {
      }
     
      @FXML
-     private void openWindowForSongLocalizations() throws Exception
+     private void openWindowForSongLocalizations()
      {
-            FXMLLoader loader = new FXMLLoader();
-            Parent root =  loader.load(getClass().getResource("RootLayout.fxml"));
+//            FXMLLoader loader = new FXMLLoader();
+//            Parent root =  loader.load(getClass().getResource("SongLocalization.fxml"));
+//
+//            // Show the scene containing the root layout.
+//            Scene scene = new Scene(root);
+//            Stage stage = new Stage();
+//            stage.setScene(scene);
+//            stage.show(); 
+         try {
+        // Load the fxml file and create a new stage for the popup dialog.
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("SongLocalization.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
 
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show(); 
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Lokalizacja piosnek");
+        //dialogStage.initModality(Modality.WINDOW_MODAL);
+        //dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        // Set the person into the controller.
+        //SongLocalizationController controller = loader.getController();
+       // controller.setDialogStage(dialogStage);
+        //controller.setPerson(person);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        //return controller.isOkClicked();
+    } catch (IOException e) {
+        e.printStackTrace();
+        //return false;
+    }
      }
      
     @Override
@@ -443,20 +471,26 @@ public class RootLayoutController implements Initializable {
         
         //openSave();
        
-         allSongData.add(new Song("Braid - downstream", "F:\\Rzeczy karolka\\muzykama\\braid ost\\Braid OST - 02 - Downstream.mp3"));
-        allSongData.add(new Song("Lindsey - electric", "F:\\Rzeczy karolka\\muzykama\\Lindsey Stirling\\9. Lindsey Stirling - Electric Daisy Violin.mp3"));
-         allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
-         allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
-         allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
+        // allSongData.add(new Song("Braid - downstream", "F:\\Rzeczy karolka\\muzykama\\braid ost\\Braid OST - 02 - Downstream.mp3"));
+       // allSongData.add(new Song("Lindsey - electric", "F:\\Rzeczy karolka\\muzykama\\Lindsey Stirling\\9. Lindsey Stirling - Electric Daisy Violin.mp3"));
+       //  allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
+       //  allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
+       //  allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
         
-       //  allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
-       // allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
+         allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
+        allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
         
-       for (File x: getNewTextFiles(new File("F:\\Rzeczy karolka"/*\\muzykama"*/)))
+      // for (File x: getNewTextFiles(new File("F:\\Rzeczy karolka"/*\\muzykama"*/)))
+      // {
+      //      allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
+      // }
+       
+       for (File x: getNewTextFiles(new File("E:\\muzyka")))
        {
             allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
        }
 
+       openWindowForSongLocalizations();
         //currentSongData = allSongData ;
         current_playlist_table.setItems(currentSongData);
        current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());

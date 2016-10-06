@@ -2,19 +2,20 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="360.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller=".SongLocalizationController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_x.SongLocalizationController">
    <children>
       <ButtonBar layoutX="81.0" layoutY="346.0" prefHeight="40.0" prefWidth="254.0">
         <buttons>
-          <Button mnemonicParsing="false" text="Dodaj" />
+          <Button mnemonicParsing="false" onAction="#handleDodajLokalizacje" text="Dodaj" />
             <Button mnemonicParsing="false" text="Usuń" />
             <Button mnemonicParsing="false" text="Anuluj" />
         </buttons>
       </ButtonBar>
-      <ListView layoutX="14.0" layoutY="14.0" prefHeight="325.0" prefWidth="337.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <ListView layoutX="14.0" layoutY="14.0" prefHeight="294.0" prefWidth="330.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0" />
+      <Label layoutX="15.0" layoutY="14.0" prefHeight="13.0" prefWidth="344.0" text="Podaj foldery których piosenki mają być dodane do odtwarzacza" />
    </children>
 </AnchorPane>
