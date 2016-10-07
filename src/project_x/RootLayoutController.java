@@ -40,6 +40,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -471,42 +472,37 @@ public class RootLayoutController implements Initializable {
     }
      }
      
+     private void initializePlaylistTable()
+     {
+        current_playlist_table.setItems(currentSongData);
+        current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());
+        current_playlist_table.setOnMouseClicked(new EventHandler<MouseEvent>() {
+             @Override
+             public void handle(MouseEvent click) {
+                 if (click.getClickCount() == 2) {
+                     deletePlayingSong();
+                    readSelectedIndex();
+                    playSelectedSong();
+                 }
+             }
+         });
+     }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         //openSave();
-       
-        // allSongData.add(new Song("Braid - downstream", "F:\\Rzeczy karolka\\muzykama\\braid ost\\Braid OST - 02 - Downstream.mp3"));
-       // allSongData.add(new Song("Lindsey - electric", "F:\\Rzeczy karolka\\muzykama\\Lindsey Stirling\\9. Lindsey Stirling - Electric Daisy Violin.mp3"));
-       //  allSongData.add(new Song("forest", "F:\\Rzeczy karolka\\muzykama\\rozne\\forest.mp3"));
-       //  allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
-       //  allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
         
-         //allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
-       // allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
-        
-      // for (File x: getNewTextFiles(new File("F:\\Rzeczy karolka"/*\\muzykama"*/)))
-      // {
-      //      allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
-      // }
+    
        openWindowForSongLocalizations();
-      //System.out.println("Czy directory lsit jest pustre w root layout?");
-      //System.out.println(directoryList.isEmpty());
        for(File y: directoryList){
-           //System.out.println(y.getAbsolutePath());
-           //System.out.println("Kromka");
            for (File x: getNewTextFiles(new File(y.getAbsolutePath())))
             {
             allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
             }
        }
-       
-
+       initializePlaylistTable();
       
-        //currentSongData = allSongData ;
-        current_playlist_table.setItems(currentSongData);
-       current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());
-       
         volume_slider.setValue(100.0);
         
     }    
