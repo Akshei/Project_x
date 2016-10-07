@@ -482,8 +482,8 @@ public class RootLayoutController implements Initializable {
        //  allSongData.add(new Song("frozen heart", "F:\\Rzeczy karolka\\muzykama\\frozen - ost\\CD1\\01. Frozen Heart.mp3"));
        //  allSongData.add(new Song("Funeral of provincional vampire", "F:\\Rzeczy karolka\\muzykama\\jelonek\\jelonek\\06. Funeral of Provincial Vampire.BoT.mp3"));
         
-         allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
-        allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
+         //allSongData.add(new Song("kalimba", "C:\\Users\\Public\\Music\\Sample Music\\Kalimba.mp3"));
+       // allSongData.add(new Song("maid - flaxen hair", "C:\\Users\\Public\\Music\\Sample Music\\Maid with the Flaxen Hair.mp3"));
         
       // for (File x: getNewTextFiles(new File("F:\\Rzeczy karolka"/*\\muzykama"*/)))
       // {
