@@ -506,6 +506,7 @@ public class RootLayoutController implements Initializable {
         //currentSongData = allSongData ;
         current_playlist_table.setItems(currentSongData);
        current_playlist_column.setCellValueFactory(cellData -> cellData.getValue().propertyName());
+       
         volume_slider.setValue(100.0);
         
     }    
