@@ -339,6 +339,7 @@ public class RootLayoutController implements Initializable {
                 // {
                       song_time_slider_visible.setValue((mediaPlayer.currentTimeProperty().getValue().toSeconds() / mediaPlayer.getMedia().getDuration().toSeconds())* 100.0);
                       actual_song_time.setText(changeTimeInSecondsToMinutes(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
+                      max_song_time.setText(changeTimeInSecondsToMinutes(mediaPlayer.getMedia().getDuration().toSeconds()));
                       //actual_song_time.setText(String.valueOf(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
                      // savedMili = mediaPlayer.currentTimeProperty().getValue().toMillis();
                //  }
@@ -474,17 +475,27 @@ public class RootLayoutController implements Initializable {
          });
      }
      
+     private void dodajNowaPiosenke (File plik){
+         for (Song x : allSongData)
+         {
+             //System.out.println(plik.getAbsolutePath());
+             if (plik.getName().equals(x.getName()) /*|| plik.getAbsolutePath() == x.getPath()*/)
+             {
+                 return;
+             }
+         }
+          allSongData.add(new Song(plik.getName(),plik.getAbsolutePath()));
+     }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         //openSave();
-        
-    
        openWindowForSongLocalizations();
        for(File y: directoryList){
            for (File x: getNewTextFiles(new File(y.getAbsolutePath())))
             {
-            allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
+                dodajNowaPiosenke(x);
+               // allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
             }
        }
        initializePlaylistTable();
