@@ -57,7 +57,6 @@ public class RootLayoutController implements Initializable {
     
     private ObservableList<File> directoryList = FXCollections.observableArrayList();
     private double savedMili = 0;
-    @FXML
     private ChangeListener listener;
     @FXML
     private Slider song_time_slider_visible;
@@ -75,19 +74,15 @@ public class RootLayoutController implements Initializable {
     private TableColumn<Song, String> current_playlist_column;
     @FXML
     private TableView<Song> current_playlist_table;
-    @FXML
     private ObservableList<Song> allSongData = FXCollections.observableArrayList();
-    @FXML
     private ObservableList<Song> currentSongData = FXCollections.observableArrayList();
-    @FXML
     private MediaPlayer mediaPlayer;
-    @FXML
     private Media media;
     @FXML
     private Label actual_song_time;
     @FXML
     private Label max_song_time;
-    int selectedIndex;
+    int selectedIndex = 0;
     private double volume = 1.0;
     //int semaphore = 1;
     boolean b = false;
@@ -135,7 +130,7 @@ public class RootLayoutController implements Initializable {
         }
         else
         {
-            stopSong();
+            pauseSong();
         }
     }
     
@@ -164,7 +159,6 @@ public class RootLayoutController implements Initializable {
         }
     }
     
-    @FXML
     private void changeVolumeBySliderDrag()
     {
         if(mediaPlayer != null){
@@ -181,7 +175,6 @@ public class RootLayoutController implements Initializable {
             }
     }
     
-    @FXML
     private void muteMusic()
     {
         if (mediaPlayer != null){
@@ -192,7 +185,6 @@ public class RootLayoutController implements Initializable {
 
     }
     
-    @FXML
     private void unmuteMusic()
     {
         if (volume == 0.0) { volume = 1.0; }
@@ -204,6 +196,7 @@ public class RootLayoutController implements Initializable {
     
     private void playNextSong()
     {
+        ifCurrentPlaylistEmptySetAllSong();
         deletePlayingSong();
         chooseNextSongNumber();
         //setSelectedIndex(getSelectedIndex() + 1);
@@ -212,13 +205,13 @@ public class RootLayoutController implements Initializable {
     
      private void playPreviousSong()
     {
+         ifCurrentPlaylistEmptySetAllSong();
         deletePlayingSong();
         choosePreviousSongNumber();
         //setSelectedIndex(getSelectedIndex() - 1);
         playSelectedSong();
     }
      
-    @FXML 
     private void chooseNextSongNumber()
     {
         if (randomize_button.isSelected() == true)
@@ -236,7 +229,6 @@ public class RootLayoutController implements Initializable {
         }
     }
     
-    @FXML 
     private void choosePreviousSongNumber()
      {
         if (randomize_button.isSelected() == true)
@@ -254,7 +246,6 @@ public class RootLayoutController implements Initializable {
         }
     }
     
-    @FXML
     private void playSong()
     {
         if (mediaPlayer != null)
@@ -270,8 +261,7 @@ public class RootLayoutController implements Initializable {
         }
     }
 
-    @FXML
-    private void stopSong()
+    private void pauseSong()
     {
         if (mediaPlayer != null)
         {
@@ -291,7 +281,6 @@ public class RootLayoutController implements Initializable {
        
     }
     
-    @FXML
     private void deletePlayingSong()
     {
          if (mediaPlayer != null){
@@ -301,7 +290,6 @@ public class RootLayoutController implements Initializable {
         }
     }
     
-    @FXML
     private void ifCurrentPlaylistEmptySetAllSong()
     {
          if (true == currentSongData.isEmpty() )
@@ -311,7 +299,6 @@ public class RootLayoutController implements Initializable {
         }
     }
     
-    @FXML
     private void readSelectedIndex()
     {
         selectedIndex = current_playlist_table.getSelectionModel().getSelectedIndex();
@@ -319,7 +306,6 @@ public class RootLayoutController implements Initializable {
        
     }
     
-    @FXML
     private void playSelectedSong()
     {
         media = new Media(new File(current_playlist_table.getItems().get(selectedIndex).getPath()).toURI().toString());
@@ -332,12 +318,12 @@ public class RootLayoutController implements Initializable {
             }
         });
        actualTimeSliderAddListener();
+       if (play_pause_button.isSelected() == false) {play_pause_button.setSelected(true);}
        // max_song_time.setText(mediaPlayer.getMedia().getDuration().toSeconds().toString()); 
        // media.durationProperty().toString()
       // actual_song_time_slider.
     }
                 
-    @FXML
     private void actualTimeSliderAddListener()
     {
          mediaPlayer.currentTimeProperty().addListener(listener = new ChangeListener() {
@@ -358,7 +344,6 @@ public class RootLayoutController implements Initializable {
         });
     }
     
-    @FXML
     private void updateActualSongTimeLabel(double actual_seconds)
     {
         int seconds = (int) actual_seconds ;
@@ -380,13 +365,11 @@ public class RootLayoutController implements Initializable {
         actual_song_time.setText(czas);
     }
     
-    @FXML
     private void actualTimeSliderRemoveListener()
     {
         mediaPlayer.currentTimeProperty().removeListener(listener);
     }
     
-    @FXML
     private void addMusicFiles(ActionEvent event){
         System.out.println("add music files!");
          FileChooser chooser = new FileChooser();
@@ -429,7 +412,6 @@ public class RootLayoutController implements Initializable {
     return song_list;
      }
     
-     @FXML
      private void openWindowForSongLocalizations()
      {
 //            FXMLLoader loader = new FXMLLoader();
