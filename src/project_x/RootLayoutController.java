@@ -319,6 +319,8 @@ public class RootLayoutController implements Initializable {
         });
        actualTimeSliderAddListener();
        if (play_pause_button.isSelected() == false) {play_pause_button.setSelected(true);}
+      
+       
        // max_song_time.setText(mediaPlayer.getMedia().getDuration().toSeconds().toString()); 
        // media.durationProperty().toString()
       // actual_song_time_slider.
@@ -326,6 +328,7 @@ public class RootLayoutController implements Initializable {
                 
     private void actualTimeSliderAddListener()
     {
+       // max_song_time.setText(changeTimeInSecondsToMinutes(mediaPlayer.getMedia().getDuration().toSeconds())); 
          mediaPlayer.currentTimeProperty().addListener(listener = new ChangeListener() {
 
             @Override
@@ -335,7 +338,7 @@ public class RootLayoutController implements Initializable {
                //if (semaphore == 1)
                 // {
                       song_time_slider_visible.setValue((mediaPlayer.currentTimeProperty().getValue().toSeconds() / mediaPlayer.getMedia().getDuration().toSeconds())* 100.0);
-                      updateActualSongTimeLabel(mediaPlayer.currentTimeProperty().getValue().toSeconds());
+                      actual_song_time.setText(changeTimeInSecondsToMinutes(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
                       //actual_song_time.setText(String.valueOf(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
                      // savedMili = mediaPlayer.currentTimeProperty().getValue().toMillis();
                //  }
@@ -344,7 +347,7 @@ public class RootLayoutController implements Initializable {
         });
     }
     
-    private void updateActualSongTimeLabel(double actual_seconds)
+    private String changeTimeInSecondsToMinutes(double actual_seconds)
     {
         int seconds = (int) actual_seconds ;
         int min = 0;
@@ -362,7 +365,8 @@ public class RootLayoutController implements Initializable {
         {
             czas = Integer.toString(min) +":0" + Integer.toString(seconds);
         }
-        actual_song_time.setText(czas);
+        
+        return czas;
     }
     
     private void actualTimeSliderRemoveListener()
