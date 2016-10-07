@@ -36,13 +36,17 @@ public class SongLocalizationController implements Initializable {
     
     @FXML
     private void handleDodajLokalizacje(ActionEvent event){
+        
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("JavaFX Projects");
-        File defaultDirectory = new File("F:\\Rzeczy karolka\\muzykama");
+      //  File defaultDirectory = new File("F:\\Rzeczy karolka\\muzykama");
+        File defaultDirectory = new File("c:");
         chooser.setInitialDirectory(defaultDirectory);
         Stage stage = new Stage();
         File selectedDirectory = chooser.showDialog(stage);
-        directoryList.add(selectedDirectory);
+        if (selectedDirectory != null){
+         directoryList.add(selectedDirectory);
+    }
         //System.out.println(b);
         directoryListView.setItems(directoryList);
     }
