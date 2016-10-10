@@ -5,7 +5,11 @@
  */
 package project_x;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
@@ -385,9 +389,52 @@ public class RootLayoutController implements Initializable {
                allSongData.add(new Song(file.getName(),file.getAbsolutePath()));
            }
     }
-    private void openSave()
+    private boolean canOpenDirectorySave()
     {
-        
+        File file = new File("save.txt");
+        if (true == file.exists())
+        {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader("save.txt"));
+                String line;
+                 while ((line = reader.readLine()) != null)
+                {
+                  directoryList.add(new File(line));
+                }
+            }
+            catch (FileNotFoundException x)
+            {
+                return false;
+            }
+            catch (IOException x){
+                // no idea 
+            }
+        }
+        else
+        {
+            return false;
+        }
+        System.out.println(directoryList.isEmpty());
+        return (!directoryList.isEmpty());
+    }
+    
+    private void saveDirectorySave()
+    {
+        try{
+           File file = new File("save.txt");
+           if (!file.exists()) {
+                file.createNewFile();
+            }
+           FileWriter writer = new FileWriter(file);
+           for (File x: directoryList)
+           {
+               writer.write(x.getAbsolutePath());
+           }
+
+        }
+        catch (IOException x){
+            
+        }
     }
     
      private List<File> getNewTextFiles(File dir) {
@@ -418,15 +465,7 @@ public class RootLayoutController implements Initializable {
      }
     
      private void openWindowForSongLocalizations()
-     {
-//            FXMLLoader loader = new FXMLLoader();
-//            Parent root =  loader.load(getClass().getResource("SongLocalization.fxml"));
-//
-//            // Show the scene containing the root layout.
-//            Scene scene = new Scene(root);
-//            Stage stage = new Stage();
-//            stage.setScene(scene);
-//            stage.show(); 
+     {       
          try {
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
@@ -457,6 +496,7 @@ public class RootLayoutController implements Initializable {
         e.printStackTrace();
         //return false;
     }
+         saveDirectorySave();
      }
      
      private void initializePlaylistTable()
@@ -490,7 +530,9 @@ public class RootLayoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //openSave();
-       openWindowForSongLocalizations();
+        if (false == canOpenDirectorySave()){
+            openWindowForSongLocalizations();
+        }
        for(File y: directoryList){
            for (File x: getNewTextFiles(new File(y.getAbsolutePath())))
             {
@@ -499,9 +541,9 @@ public class RootLayoutController implements Initializable {
             }
        }
        initializePlaylistTable();
-      
+
         volume_slider.setValue(100.0);
-        
+         //saveDirectorySave();     //Działa, ale nie w finalize. Trzeba coś z tym zrobić
     }    
     
     private int getSelectedIndex()
