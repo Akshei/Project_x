@@ -44,8 +44,10 @@ public class Project_X extends Application {
         stage.setResizable(false);
         stage.show(); */
         
-        
-       // rootLayoutController = loader.getController();
+        System.out.println("Kromka startowa projektu X");
+        //rootLayoutController = loader.getController();
+        //rootLayoutController.setStage(stage);
+        //rootLayoutController.setTrue();
        // rootLayoutController.setMainApp(this);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
@@ -61,6 +63,8 @@ public class Project_X extends Application {
     public static void main(String[] args) {
         
         launch(args);
+        //System.out.println("Kromka konczaca program");
+       //rootLayoutController.setStage(stage);
     }
     
 }

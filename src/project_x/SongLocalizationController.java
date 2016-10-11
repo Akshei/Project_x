@@ -69,7 +69,7 @@ public class SongLocalizationController implements Initializable {
     {
         //System.out.println(directoryList.isEmpty());
         rootController.setDirectoriesList(directoryList);
-        rootController.setTrue();
+        //rootController.setTrue();
         window_stage.close();
     }
         
