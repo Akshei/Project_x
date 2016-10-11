@@ -60,6 +60,9 @@ import javafx.util.Duration;
 
 public class RootLayoutController implements Initializable {
     
+    @FXML
+    Parent root;
+    private Stage thisStage;
     private ObservableList<File> directoryList = FXCollections.observableArrayList();
     private double savedMili = 0;
     private ChangeListener listener;
@@ -162,6 +165,19 @@ public class RootLayoutController implements Initializable {
         {
            unmuteMusic();
         }
+    }
+    
+    @FXML
+    private void handleCloseMenuItem()
+    {
+        thisStage = (Stage) root.getScene().getWindow();
+        thisStage.close();
+    }
+    
+    @FXML
+    private void handleDirectoriesListMenuItem()
+    {
+        openWindowForSongLocalizations();
     }
     
     private void changeVolumeBySliderDrag()
@@ -435,6 +451,7 @@ public class RootLayoutController implements Initializable {
         }
     }
     
+    
      private List<File> getNewTextFiles(File dir) {
          List<File> song_list = new ArrayList<File>();
          //File dir = new File("E:\\muzyka\\" /*EricTaylorRoyaltyFreeMusic02"*/);
@@ -464,6 +481,7 @@ public class RootLayoutController implements Initializable {
     
      private void openWindowForSongLocalizations()
      {       
+          
          try {
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
@@ -485,7 +503,7 @@ public class RootLayoutController implements Initializable {
         controller.setDirectoryList(directoryList);
        // controller.setDialogStage(dialogStage);
         //controller.setPerson(person);
-
+         controller.directoryListView.setItems(directoryList);
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
         //saveDirectorySave();
@@ -547,7 +565,7 @@ public class RootLayoutController implements Initializable {
             }
        }
        initializePlaylistTable();
-
+       //thisStage = (Stage) root.getScene().getWindow();
         volume_slider.setValue(100.0);
          //saveDirectorySave();     //Działa, ale nie w finalize. Trzeba coś z tym zrobić
     }    
@@ -573,8 +591,11 @@ public class RootLayoutController implements Initializable {
         directoryList = directoryList_;
     }
     
-    public void setTrue()
-    {
+    public void setStage(Stage stage_){
+        thisStage = stage_;
+    }
+    
+    public void setTrue(){
         b = true;
     }
 }
