@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -389,33 +390,27 @@ public class RootLayoutController implements Initializable {
                allSongData.add(new Song(file.getName(),file.getAbsolutePath()));
            }
     }
-    private boolean canOpenDirectorySave()
+    private void openDirectorySave()
     {
-        File file = new File("save.txt");
-        if (true == file.exists())
-        {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader("save.txt"));
-                String line;
-                 while ((line = reader.readLine()) != null)
-                {
-                  directoryList.add(new File(line));
-                }
-            }
-            catch (FileNotFoundException x)
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("save.txt"));
+            String line;
+             while ((line = reader.readLine()) != null)
             {
-                return false;
+              directoryList.add(new File(line));
             }
-            catch (IOException x){
-                // no idea 
-            }
+             reader.close();
         }
-        else
+        catch (FileNotFoundException x)
         {
-            return false;
         }
-        System.out.println(directoryList.isEmpty());
-        return (!directoryList.isEmpty());
+        catch (IOException x){
+        }
+    }
+    
+    private boolean canOpenDirectorySave(){
+        File file = new File("save.txt");
+        return file.exists();
     }
     
     private void saveDirectorySave()
@@ -424,16 +419,19 @@ public class RootLayoutController implements Initializable {
            File file = new File("save.txt");
            if (!file.exists()) {
                 file.createNewFile();
+                System.out.println("Kromka tworzaca pliczki");
             }
-           FileWriter writer = new FileWriter(file);
+           
+           PrintWriter writer = new PrintWriter(file);
            for (File x: directoryList)
            {
-               writer.write(x.getAbsolutePath());
+               writer.println(x.getAbsolutePath());
+               System.out.println("Kromka zapisujaca do pliczku");
            }
-
+            writer.close();
         }
         catch (IOException x){
-            
+            System.out.println("Kromka wyrzucajaca wyjatki");
         }
     }
     
@@ -490,6 +488,7 @@ public class RootLayoutController implements Initializable {
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
+        //saveDirectorySave();
 
         //return controller.isOkClicked();
     } catch (IOException e) {
@@ -497,6 +496,7 @@ public class RootLayoutController implements Initializable {
         //return false;
     }
          saveDirectorySave();
+         System.out.println("Kromka zapisujaca");
      }
      
      private void initializePlaylistTable()
@@ -530,9 +530,15 @@ public class RootLayoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //openSave();
-        if (false == canOpenDirectorySave()){
+        if (true == canOpenDirectorySave()){
+            openDirectorySave();
+            //openWindowForSongLocalizations();
+        }
+        if (directoryList.isEmpty()){
             openWindowForSongLocalizations();
         }
+        System.out.println("Directory list empty?:");
+        System.out.println(directoryList.isEmpty());
        for(File y: directoryList){
            for (File x: getNewTextFiles(new File(y.getAbsolutePath())))
             {

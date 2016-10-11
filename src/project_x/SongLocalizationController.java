@@ -28,6 +28,7 @@ public class SongLocalizationController implements Initializable {
     ListView directoryListView;
     Stage window_stage;
     boolean b = false;
+    String default_directory = "c:";
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -40,12 +41,13 @@ public class SongLocalizationController implements Initializable {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("JavaFX Projects");
       //  File defaultDirectory = new File("F:\\Rzeczy karolka\\muzykama");
-        File defaultDirectory = new File("c:");
+        File defaultDirectory = new File(default_directory);
         chooser.setInitialDirectory(defaultDirectory);
         Stage stage = new Stage();
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null){
          directoryList.add(selectedDirectory);
+         default_directory = selectedDirectory.getAbsolutePath();
     }
         //System.out.println(b);
         directoryListView.setItems(directoryList);
