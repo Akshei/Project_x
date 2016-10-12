@@ -179,6 +179,15 @@ public class RootLayoutController implements Initializable {
         openWindowForSongLocalizations();
     }
     
+    @FXML
+    private void handleAddMusicFilesMenuItem(){
+        List<File> kromka = addMusicFiles();
+        for(File x: kromka){
+            allSongData.add(new Song(x.getName(), x.getAbsolutePath()));
+        }
+    }
+
+    
     private void closeThisStage(){
         thisStage = (Stage) root.getScene().getWindow();
         thisStage.close();
@@ -351,8 +360,8 @@ public class RootLayoutController implements Initializable {
                //if (semaphore == 1)
                 // {
                       song_time_slider_visible.setValue((mediaPlayer.currentTimeProperty().getValue().toSeconds() / mediaPlayer.getMedia().getDuration().toSeconds())* 100.0);
-                      actual_song_time.setText(changeTimeInSecondsToMinutes(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
-                      max_song_time.setText(changeTimeInSecondsToMinutes(mediaPlayer.getMedia().getDuration().toSeconds()));
+                      actual_song_time.setText(changeTimeInSecondsToFormatHMS(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
+                      max_song_time.setText(changeTimeInSecondsToFormatHMS(mediaPlayer.getMedia().getDuration().toSeconds()));
                       //actual_song_time.setText(String.valueOf(mediaPlayer.currentTimeProperty().getValue().toSeconds()));
                      // savedMili = mediaPlayer.currentTimeProperty().getValue().toMillis();
                //  }
@@ -361,16 +370,48 @@ public class RootLayoutController implements Initializable {
         });
     }
     
-    private String changeTimeInSecondsToMinutes(double actual_seconds)
+    private String changeTimeInSecondsToFormatHMS(double actual_seconds)
     {
         int seconds = (int) actual_seconds ;
         int min = 0;
+        int hours = 0;
         String czas;
         if (seconds > 60)
         {
             min = seconds/60 ;
             seconds = seconds%60;
         }
+       if (min > 60)
+        {
+            hours = min/60 ;
+            min = min%60;
+        }
+       if (hours > 0){
+          if (min >=10){
+               if (seconds >= 10)
+                    {
+                         czas = Integer.toString(hours) + ":" + Integer.toString(min) +":" + Integer.toString(seconds);
+                    }
+                    else
+                    {
+                        czas = Integer.toString(hours) + ":" + Integer.toString(min) +":0" + Integer.toString(seconds);
+                    }
+          } 
+          else{
+              if (seconds >= 10)
+                    {
+                         czas = Integer.toString(hours) + ":0" + Integer.toString(min) +":" + Integer.toString(seconds);
+                    }
+                    else
+                    {
+                        czas = Integer.toString(hours) + ":0" + Integer.toString(min) +":0" + Integer.toString(seconds);
+                    }
+          }
+       }
+       else{
+           
+       }
+        
         if (seconds >= 10)
         {
              czas = Integer.toString(min) +":" + Integer.toString(seconds);
@@ -379,7 +420,6 @@ public class RootLayoutController implements Initializable {
         {
             czas = Integer.toString(min) +":0" + Integer.toString(seconds);
         }
-        
         return czas;
     }
     
@@ -388,16 +428,15 @@ public class RootLayoutController implements Initializable {
         mediaPlayer.currentTimeProperty().removeListener(listener);
     }
     
-    private void addMusicFiles(ActionEvent event){
+    private List<File> addMusicFiles(){
         System.out.println("add music files!");
          FileChooser chooser = new FileChooser();
            chooser.setTitle("Open File");
-           File file = chooser.showOpenDialog(new Stage());
+           List<File> list = chooser.showOpenMultipleDialog(new Stage());
 
-           if (file != null){
-               allSongData.add(new Song(file.getName(),file.getAbsolutePath()));
-           }
+           return list;
     }
+    
     private void openDirectorySave()
     {
         try {
