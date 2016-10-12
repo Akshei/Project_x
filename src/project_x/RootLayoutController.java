@@ -170,14 +170,18 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handleCloseMenuItem()
     {
-        thisStage = (Stage) root.getScene().getWindow();
-        thisStage.close();
+        closeThisStage();
     }
     
     @FXML
     private void handleDirectoriesListMenuItem()
     {
         openWindowForSongLocalizations();
+    }
+    
+    private void closeThisStage(){
+        thisStage = (Stage) root.getScene().getWindow();
+        thisStage.close();
     }
     
     private void changeVolumeBySliderDrag()
@@ -288,18 +292,6 @@ public class RootLayoutController implements Initializable {
         {
             mediaPlayer.pause();
         }
-    }
-    
-    @FXML
-    private void handleButtonAction(/*ActionEvent event*/) {
-        
-        ifCurrentPlaylistEmptySetAllSong();
-       
-        deletePlayingSong();
-       
-        System.out.println("You clicked me!");
-        playSelectedSong();
-       
     }
     
     private void deletePlayingSong()
@@ -545,12 +537,22 @@ public class RootLayoutController implements Initializable {
           allSongData.add(new Song(plik.getName(),plik.getAbsolutePath()));
      }
      
+     private void deleteNonExistingFolderFromDirectoryList(){
+         for (int i = 0; i < directoryList.size(); i++){
+             if (directoryList.get(i).exists() == false ){
+                 directoryList.remove(directoryList.get(i));
+                 i--;
+             }
+         }
+     }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //openSave();
         if (true == canOpenDirectorySave()){
             openDirectorySave();
             //openWindowForSongLocalizations();
+            deleteNonExistingFolderFromDirectoryList();
         }
         if (directoryList.isEmpty()){
             openWindowForSongLocalizations();
