@@ -605,6 +605,25 @@ public class RootLayoutController implements Initializable {
          }
      }
      
+     private List<File> takeSongsFromSongSave(){
+        List<File> list = new ArrayList();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("addSong.rpg"));
+            String line;
+            while ((line = reader.readLine()) != null){
+                list.add(new File(line));
+            }
+             reader.close();
+        }
+        catch (FileNotFoundException x)
+        {
+        }
+        catch (IOException x){
+        }
+        
+        return list;
+     }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //openSave();
@@ -624,6 +643,9 @@ public class RootLayoutController implements Initializable {
                 dodajNowaPiosenke(x);
                // allSongData.add(new Song(x.getName(),x.getAbsolutePath()));
             }
+       }
+       for (File x : takeSongsFromSongSave()){
+           dodajNowaPiosenke(x);
        }
        initializePlaylistTable();
        //thisStage = (Stage) root.getScene().getWindow();
