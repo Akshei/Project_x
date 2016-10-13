@@ -181,10 +181,16 @@ public class RootLayoutController implements Initializable {
     
     @FXML
     private void handleAddMusicFilesMenuItem(){
-        List<File> kromka = addMusicFiles();
+       addMusicFilesWithWindow();
+    }
+    
+    private void addMusicFilesWithWindow(){
+         List<File> kromka = addMusicFiles();
         for(File x: kromka){
             allSongData.add(new Song(x.getName(), x.getAbsolutePath()));
+            
         }
+        
     }
 
     
@@ -341,7 +347,7 @@ public class RootLayoutController implements Initializable {
         });
        actualTimeSliderAddListener();
        if (play_pause_button.isSelected() == false) {play_pause_button.setSelected(true);}
-      
+      mediaPlayer.setVolume(volume_slider.getValue()/100.0);
        
        // max_song_time.setText(mediaPlayer.getMedia().getDuration().toSeconds().toString()); 
        // media.durationProperty().toString()
