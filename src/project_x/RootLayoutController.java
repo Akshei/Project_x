@@ -6,6 +6,7 @@
 package project_x;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -187,12 +188,25 @@ public class RootLayoutController implements Initializable {
     private void addMusicFilesWithWindow(){
          List<File> kromka = addMusicFiles();
         for(File x: kromka){
-            allSongData.add(new Song(x.getName(), x.getAbsolutePath()));
-            
-        }
-        
+           dodajNowaPiosenke(x);
+           addSongToSongSave(x);
+        }       
     }
-
+    
+    private void addSongToSongSave(File song){
+        File save = new File("addSong.rpg");
+        try{
+            BufferedWriter out = new BufferedWriter(new FileWriter(save, true));
+            //if (save.exists() == false){
+             //   save.createNewFile();
+            // }
+            out.append(song.getAbsolutePath().toString());
+            out.newLine();
+            out.flush();
+            out.close();
+        }
+        catch (IOException x){x.printStackTrace();}
+    }
     
     private void closeThisStage(){
         thisStage = (Stage) root.getScene().getWindow();
@@ -446,7 +460,7 @@ public class RootLayoutController implements Initializable {
     private void openDirectorySave()
     {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("save.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("directories.rpg"));
             String line;
              while ((line = reader.readLine()) != null)
             {
@@ -462,14 +476,14 @@ public class RootLayoutController implements Initializable {
     }
     
     private boolean canOpenDirectorySave(){
-        File file = new File("save.txt");
+        File file = new File("directories.rpg");
         return file.exists();
     }
     
     private void saveDirectorySave()
     {
         try{
-           File file = new File("save.txt");
+           File file = new File("directories.rpg");
            if (!file.exists()) {
                 file.createNewFile();
                 System.out.println("Kromka tworzaca pliczki");
